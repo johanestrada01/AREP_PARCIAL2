@@ -12,12 +12,21 @@ public class proxyContoller {
 
     String response;
     HashMap<Integer, Integer> values = new HashMap<>();
-    @GetMapping("/{value}")
-    public String getValue(@PathVariable("value") int value) throws IOException {
-        values.put(0, 2);
-        values.put(1, 1);
-        calculateValue(value);
-        return values.values().toString();
+    @GetMapping("/lucasseq/{value}")
+    @ResponseBody
+    public String getSeq(@PathVariable("value") int value) throws IOException {
+        boolean req = false;
+        String url1 = "http://3.87.198.120:8080/seq/" + value, url2 = "http://44.201.169.182:8080/seq/" + value, ulrRequest;
+        ulrRequest = req ? url1 : url2;
+        req = !req;
+        return ulrRequest;
+        return "{\n" +
+                "\n" +
+                " \"operation\": \"Secuencia de Lucas\",\n" +
+                "\n" +
+                " \"input\":  13,\n" +
+                "\n" +
+                " \"output\":" + HttpConnectionExample.request(ulrRequest) + "}";
     }
 
 
